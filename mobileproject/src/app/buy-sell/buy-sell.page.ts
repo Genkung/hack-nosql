@@ -59,20 +59,14 @@ export class BuySellPage implements OnInit {
   async Sell(item:CoinPrice) {
     const alert = await this.alertController.create({
       header: 'Sell',
-      inputs: [
-        {
-          name: 'name1',
-          type: 'text',
-          placeholder: 'Insert money to sell'
-        },
-      ],
+      message: 'ขาย Coin ทั้งหมดที่มี',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'ยกเลิก',
           role: 'cancel',
           cssClass: 'secondary',
         }, {
-          text: 'Ok',
+          text: 'ตกลง',
           handler: () => {
             console.log('Confirm Ok');
           }

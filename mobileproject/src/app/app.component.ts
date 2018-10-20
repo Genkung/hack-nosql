@@ -16,16 +16,6 @@ export class AppComponent {
       icon: 'home'
     },
     {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
-    },
-    {
-      title: 'Ratehistory',
-      url: '/Ratehistory',
-      icon: 'list'
-    },
-    {
       title: 'AccountDetails',
       url: '/AccountDetails',
       icon: 'md-contact'
