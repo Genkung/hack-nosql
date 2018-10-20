@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalVarible} from '../models';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-account-details',
@@ -7,10 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountDetailsPage implements OnInit {
   
-  Account_data:any={Username :"John smith",Coins:[],Balance:400.0};
-  Account_Coins_data:any=[{Symbol:"BTH",Quantity:80.5,TotalAmount:"700"},
-                          {Symbol:"BTC",Quantity:81.5,TotalAmount:"800"},
-                          {Symbol:"BT",Quantity:82.5,TotalAmount:"900"}];
+  Account_username:any;
+  Account_Coins_data:any=[]
   balance=0.0;
     // Account_Data:any=[{
     //     _id:"1",
@@ -26,9 +26,21 @@ export class AccountDetailsPage implements OnInit {
     //   },
     // ];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
   }
-
+  ionViewDidEnter()
+  {
+    this.GetUser();
+  }
+  GetUser()
+  {
+    this.http.get<any>(GlobalVarible.host + "/api/hack/"+GlobalVarible.UserName)
+    .subscribe(data => {
+      this.Account_Coins_data = data.coins;
+      this.Account_username = data.username;
+      this.balance = data.balance;
+    });
+  }
 }
