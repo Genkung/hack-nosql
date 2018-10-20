@@ -10,12 +10,12 @@
   </ion-header>
 
 <ion-content padding>
-  <ion-card>
+  <ion-card  *ngFor="let item of history">
     <ion-card-header>
       <ion-item>
         <img src="../../assets/icon/calendar.png" style="width: 10%;margin: 4px 10px 7px 0;padding: 0 2px 0 0;">
         <ion-label>
-          2018/10/20 15:02:45
+          {{item.updateDateTime}}
         </ion-label>
       </ion-item>
 
@@ -48,7 +48,7 @@
         <ion-col col-4>
           <ion-item lines="none">
             <ion-label>
-              35
+                {{item.buyRate}}
             </ion-label>
             <ion-icon ios="ios-arrow-round-up" md="md-arrow-round-up" style="color: lightseagreen;"></ion-icon>
           </ion-item>
@@ -56,7 +56,7 @@
         <ion-col col-4>
           <ion-item lines="none">
             <ion-label>
-              30
+                {{item.sellRate}}
             </ion-label>
             <ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down" style="color: red;"></ion-icon>
           </ion-item>
@@ -65,114 +65,5 @@
     </ion-card-content>
 
   </ion-card>
-  <ion-card>
-    <ion-card-header>
-      <ion-item>
-        <img src="../../assets/icon/calendar.png" style="width: 10%;margin: 4px 10px 7px 0;padding: 0 2px 0 0;">
-        <ion-label>
-          2018/10/20 15:02:45
-        </ion-label>
-      </ion-item>
-
-    </ion-card-header>
-    <ion-card-content style="margin-top: -20px;">
-      <ion-row>
-        <ion-col col-4>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item lines="none">
-            <ion-label>
-              Buy rate
-            </ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item lines="none">
-            <ion-label>
-              Sell rate
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col col-4 style="margin-top: -36px;">
-          <ion-item lines="none">
-            <img src="../../assets/icon/coin.png">
-          </ion-item>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item lines="none">
-            <ion-label>
-              35
-            </ion-label>
-            <ion-icon ios="ios-arrow-round-up" md="md-arrow-round-up" style="color: lightseagreen;"></ion-icon>
-          </ion-item>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item lines="none">
-            <ion-label>
-              30
-            </ion-label>
-            <ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down" style="color: red;"></ion-icon>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-card-content>
-
-  </ion-card>
-  <ion-card>
-    <ion-card-header>
-      <ion-item>
-        <img src="../../assets/icon/calendar.png" style="width: 10%;margin: 4px 10px 7px 0;padding: 0 2px 0 0;">
-        <ion-label>
-          2018/10/20 15:02:45
-        </ion-label>
-      </ion-item>
-
-    </ion-card-header>
-    <ion-card-content style="margin-top: -20px;">
-      <ion-row>
-        <ion-col col-4>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item lines="none">
-            <ion-label>
-              Buy rate
-            </ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item lines="none">
-            <ion-label>
-              Sell rate
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col col-4 style="margin-top: -36px;">
-          <ion-item lines="none">
-            <img src="../../assets/icon/coin.png">
-          </ion-item>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item lines="none">
-            <ion-label>
-              35
-            </ion-label>
-            <ion-icon ios="ios-arrow-round-up" md="md-arrow-round-up" style="color: lightseagreen;"></ion-icon>
-          </ion-item>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item lines="none">
-            <ion-label>
-              30
-            </ion-label>
-            <ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down" style="color: red;"></ion-icon>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-card-content>
-
-  </ion-card>
+  
 </ion-content>
