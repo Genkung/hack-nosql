@@ -29,9 +29,15 @@ export class AppComponent {
       title: 'AccountDetails',
       url: '/AccountDetails',
       icon: 'md-contact'
+    },
+    {
+      title: 'BuySell',
+      url: '/BuySell',
+      icon: 'md-swap'
     }
     
   ];
+   
 
   constructor(
     private platform: Platform,

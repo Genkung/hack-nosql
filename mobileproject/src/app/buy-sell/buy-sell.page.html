@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        BuySell
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content padding>
+    <ion-grid>
+        <ion-row>
+          <ion-col size="2">
+            <p style="margin: 0 !important">Name</p>
+          </ion-col>
+          <ion-col size="5">
+            <p style="text-align: right;margin: 0 !important">Buy</p>
+          </ion-col>
+          <ion-col size="5">
+              <p style="text-align: right;margin: 0 !important">Sell</p>
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-grid *ngFor="let item of coint">
+        <ion-row>
+          <ion-col size="2">
+            <h2>{{item.name}}</h2>
+          </ion-col>
+          <ion-col size="5">
+            <ion-button expand="block" color="success" (click)="Buy(item)">${{item.buy}}</ion-button>
+          </ion-col>
+          <ion-col size="5">
+            <ion-button expand="block" color="danger" (click)="Sell(item)">${{item.sell}}</ion-button>
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

@@ -22,7 +22,15 @@ const routes: Routes = [
   {
     path: 'AccountDetails',
     loadChildren: './account-details/account-details.module#AccountDetailsPageModule'
-  }
+  },
+  {
+    path: 'AccountDetails', 
+    loadChildren: './account-details/account-details.module#AccountDetailsPageModule' 
+  },
+  { 
+    path: 'BuySell', 
+    loadChildren: './buy-sell/buy-sell.module#BuySellPageModule' 
+  },
 
 
 ];
