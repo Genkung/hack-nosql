@@ -13,7 +13,6 @@ using NJsonSchema;
 using NSwag.AspNetCore;
 using System.Reflection;
 
-
 namespace WalletSampleApi
 {
     public class Startup

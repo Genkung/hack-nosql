@@ -13,6 +13,7 @@ namespace WalletSampleApi.Models
 
     public class CoinPrice
     {
+        public string _id { get; set; }
         public string Symbol { get; set; }
         public double Buy { get; set; }
         public double Sell { get; set; }
