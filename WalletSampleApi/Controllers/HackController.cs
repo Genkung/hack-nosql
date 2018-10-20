@@ -14,22 +14,27 @@ namespace WalletSampleApi.Controllers
     {
         private MongoClient client;
         private IMongoDatabase database;
-        private IMongoCollection<CustomerWallet> customerWalletcollection;
-        private IMongoCollection<CustomerCoin> customerCoincollection;
+        private IMongoCollection<CustomerWallet> customerWalletCollection;
+        private IMongoCollection<CustomerCoin> customerCoinCollection;
+        private IMongoCollection<CoinRateHistory> coinRateHistoryCollection;
+        private IMongoCollection<CoinPrice> coinPriceCollection;
 
         public HackController()
         {
-            client = new MongoClient("mongodb://localhost:27017");
-            database = client.GetDatabase("foo");
-            customerWalletcollection = database.GetCollection<CustomerWallet>("customerwallet");
-            customerCoincollection = database.GetCollection<CustomerCoin>("customercoin");
+            client = new MongoClient($"mongodb://admin:admin1234@ds016138.mlab.com:16138/cointrade");
+            database = client.GetDatabase("cointrade");
+            customerWalletCollection = database.GetCollection<CustomerWallet>("customerwallet");
+            customerCoinCollection = database.GetCollection<CustomerCoin>("customercoin");
+            coinRateHistoryCollection = database.GetCollection<CoinRateHistory>("coinsratehistory");
+            coinPriceCollection = database.GetCollection<CoinPrice>("coinprice");
         }
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<IEnumerable<CoinPrice>>> Get()
         {
-            return new string[] { "jdoe", "ptparker" };
+            var result = await coinPriceCollection.Find(x => true).ToListAsync();
+            return result;
         }
 
         // GET api/values/5
@@ -37,10 +42,12 @@ namespace WalletSampleApi.Controllers
         public async Task<ActionResult<CustomerWallet>> Get(string id)
         {
             //TODO: Check existing user            
-            var user = await customerWalletcollection.Find(x => x.Username == id).FirstOrDefaultAsync();
+            var user = await customerWalletCollection.Find(x => x.Username == id).FirstOrDefaultAsync();
             if (user == null)
             {
-                //TODO: register new user
+                //register new user
+                user = new CustomerWallet{ Username = id, Balance = 0, Coins = new List<CustomerCoin>() };
+                customerWalletCollection.InsertOne(user);
             }
 
             return user;
@@ -71,6 +78,31 @@ namespace WalletSampleApi.Controllers
         [HttpPost]
         public void Post([FromBody] CoinPriceUpdate updateCoin)
         {
+            List<CoinRateHistory> updateCoins = new List<CoinRateHistory>();
+            foreach (var item in updateCoin.PriceList)
+            {
+                //update history
+                var coins = coinRateHistoryCollection.Find(x => x.CoinSymbol == item.Symbol).ToListAsync().Result;
+                var latestUpdate = coins.OrderByDescending(x => x.UpdateDateTime).FirstOrDefault();
+                updateCoins.Add(new CoinRateHistory
+                {
+                    _id = Guid.NewGuid().ToString(),
+                    CoinSymbol = item.Symbol,
+                    BuyRate = item.Buy,
+                    IsPossitiveBuyRate = item.Buy > latestUpdate?.BuyRate || latestUpdate == null ? true : false,//compare rate                
+                    SellRate = item.Sell,
+                    IsPossitiveSellRate = item.Sell > latestUpdate?.SellRate || latestUpdate == null ? true : false,//compare rate                
+                    UpdateDateTime = updateCoin.At
+                });
+
+                //update coinprice
+                // var update = Builders<CoinPrice>.Update
+                // .Set(it => it.Buy, item.Buy)
+                // .Set(it => it.Sell, item.Sell);
+                item._id = Guid.NewGuid().ToString();
+                coinPriceCollection.ReplaceOne(x => x.Symbol == item.Symbol, item, new UpdateOptions{ IsUpsert = true });
+            }
+            coinRateHistoryCollection.InsertMany(updateCoins);
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WalletSampleApi.Models
 {
-    public class CoisRateHistory
+    public class CoinRateHistory
     {
         public string _id { get; set; }
         public string CoinId { get; set; }

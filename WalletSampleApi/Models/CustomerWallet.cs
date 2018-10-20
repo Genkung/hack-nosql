@@ -7,12 +7,16 @@ namespace WalletSampleApi.Models
 {
     public class CustomerWallet
     {
+        public string _id { get; set; }
         public string Username { get; set; }
         public List<CustomerCoin> Coins { get; set; }
+
+        public double Balance { get; set; }
     }
 
     public class CustomerCoin
     {
+        public string _id { get; set; }
         public string Symbol { get; set; }
         /// <summary>
         /// ราคาตอนซื้อ
