@@ -13,13 +13,17 @@
    <ion-card>
       <ion-card-header>
         <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
-        <ion-card-title><b>User: </b>John</ion-card-title>
+        <ion-card-title><b>User: </b>{{Account_data.username}}</ion-card-title>
       </ion-card-header>
     
       <ion-card-content>
         <h1><b>Coins</b></h1>
-          <h2 style="text-indent: 2.5em;"><b>BTH: </b>22</h2>
-          <h2 style="text-indent: 2.5em;"><b>BTC: </b>22</h2>
+          <!-- <h2 style="text-indent: 2.5em;"><b>BTH: </b>22</h2>
+          <h2 style="text-indent: 2.5em;"><b>BTC: </b>22</h2> -->
+          <h2 style="text-indent: 2.5em;" *ngFor="let item of Account_Coins_data"  >
+            <b>{{item.Symbol}}: {{item.Quantity}}  ,  Total: {{item.TotalAmount}}</b>
+          </h2>
+        
       </ion-card-content>
     </ion-card>
     
@@ -42,7 +46,7 @@
 <ion-footer>
   <ion-card >
     <ion-card-header>
-      <ion-card-title><b>Balance: </b>200$</ion-card-title>  
+      <ion-card-title><b>Balance: </b>{{Account_data.Balance}}$</ion-card-title>  
     </ion-card-header>  
   </ion-card>
   <!-- <h1 style="text-indent: 1em"><b>Balance: </b>200$</h1> -->
