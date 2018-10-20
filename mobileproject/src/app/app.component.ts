@@ -24,7 +24,13 @@ export class AppComponent {
       title: 'Ratehistory',
       url: '/Ratehistory',
       icon: 'list'
+    },
+    {
+      title: 'AccountDetails',
+      url: '/AccountDetails',
+      icon: 'md-contact'
     }
+    
   ];
 
   constructor(

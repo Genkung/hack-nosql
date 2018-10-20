@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'Ratehistory',
     loadChildren: './ratehistory/ratehistory.module#RatehistoryPageModule'
+  },
+  {
+    path: 'AccountDetails',
+    loadChildren: './account-details/account-details.module#AccountDetailsPageModule'
   }
 
 
