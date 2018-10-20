@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
+import { ListPage} from '../list/list.page';
 
 @Component({
   selector: 'app-buy-sell',
@@ -9,11 +10,26 @@ import { ModalController } from '@ionic/angular';
 })
 export class BuySellPage implements OnInit {
 
-  constructor(public alertController: AlertController, public modalController: ModalController) { }
+  coint:CoinPrice[] = [];
+
+  constructor(public alertController: AlertController, public modalController: ModalController)
+   {
+    this.coint = 
+    [
+      {
+        _id:"1",name:"BTC",buy:20.5,sell:60.3
+      },
+      {
+        _id:"2",name:"THB",buy:80.36,sell:98.30
+      },
+    ];
+
+    }
 
   ngOnInit() {
+
   }
-  async Buy() {
+  async Buy(item:CoinPrice) {
     const alert = await this.alertController.create({
       header: 'Buy',
       inputs: [
@@ -28,20 +44,17 @@ export class BuySellPage implements OnInit {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
         }, {
           text: 'Ok',
           handler: () => {
-            console.log('Confirm Ok');
+            console.log('Confirm Ok'+item.name);
           }
         }
       ]
     });
     await alert.present();
   }
-  async Sell() {
+  async Sell(item:CoinPrice) {
     const alert = await this.alertController.create({
       header: 'Sell',
       inputs: [
@@ -56,9 +69,6 @@ export class BuySellPage implements OnInit {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
         }, {
           text: 'Ok',
           handler: () => {
@@ -69,4 +79,17 @@ export class BuySellPage implements OnInit {
     });
     await alert.present();
   }
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: ListPage,
+    });
+    return await modal.present();
+  }
+}
+
+export class CoinPrice{
+  _id:string
+  name:string
+  buy:number
+  sell:number  
 }

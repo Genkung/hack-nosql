@@ -26,6 +26,13 @@ export class AppComponent {
       icon: 'md-contact'
     },
   ];
+    },
+    {
+      title: 'BuySell',
+      url: '/BuySell',
+      icon: 'md-swap'
+    }
+  ];
 
   constructor(
     private platform: Platform,
