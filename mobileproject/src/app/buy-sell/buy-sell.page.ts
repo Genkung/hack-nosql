@@ -4,6 +4,8 @@ import { ModalController,NavController } from '@ionic/angular';
 import { NavigationExtras, Router, UrlTree } from '@angular/router';
 import { ListPage} from '../list/list.page';
 import { url } from 'inspector';
+import { GlobalVarible} from '../models';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-buy-sell',
@@ -12,31 +14,42 @@ import { url } from 'inspector';
 })
 export class BuySellPage implements OnInit {
 
-  coint:CoinPrice[] = [];
+  coint:any[] = [];
 
-  constructor(public alertController: AlertController, public modalController: ModalController, private router: Router)
+  constructor(public alertController: AlertController, public modalController: ModalController, private router: Router, private http: HttpClient)
    {
-    this.coint = 
-    [
-      {
-        _id:"1",symbol:"BTC",buy:20.5,sell:60.3
-      },
-      {
-        _id:"2",symbol:"THB",buy:80.36,sell:98.30
-      },
-    ];
-
     }
 
   ngOnInit() {
 
   }
-  async Buy(item:CoinPrice) {
+  ionViewDidEnter()
+  {
+    this.GetBuySell();
+  }
+
+  GetBuySell()
+  {
+    this.http.get<any>(GlobalVarible.host + "/api/hack")
+    .subscribe(data => {
+      this.coint = data;
+    });
+  }
+
+  BuyCoin(symbol:string,amount:number)
+  {
+    this.http.get<any>(GlobalVarible.host + "/api/hack/buycoin/"+GlobalVarible.UserName+"/"+symbol+"/"+amount)
+    .subscribe(data => {
+      this.coint = data;
+    });
+  }
+
+  async Buy(item:any) {
     const alert = await this.alertController.create({
       header: 'Buy',
       inputs: [
         {
-          name: 'name1',
+          name: 'buyAmount',
           type: 'text',
           placeholder: 'Insert money to buy'
         },
@@ -48,15 +61,15 @@ export class BuySellPage implements OnInit {
           cssClass: 'secondary',
         }, {
           text: 'Ok',
-          handler: () => {
-            console.log('Confirm Ok'+item.symbol);
+          handler: data => {
+            this.BuyCoin(item.symbol,data.buyAmount);
           }
         }
       ]
     });
     await alert.present();
   }
-  async Sell(item:CoinPrice) {
+  async Sell(item:any) {
     const alert = await this.alertController.create({
       header: 'Sell',
       message: 'ขาย Coin ทั้งหมดที่มี',
@@ -68,21 +81,14 @@ export class BuySellPage implements OnInit {
         }, {
           text: 'ตกลง',
           handler: () => {
-            console.log('Confirm Ok');
+
           }
         }
       ]
     });
     await alert.present();
   }
-  async openRateHistory(item:CoinPrice) {
+  async openRateHistory(item:any) {
     this.router.navigate(['/Ratehistory/'+item.symbol]);
   }
-}
-
-export class CoinPrice{
-  _id:string
-  symbol:string
-  buy:number
-  sell:number  
 }
