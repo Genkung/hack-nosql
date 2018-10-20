@@ -22,7 +22,8 @@ const routes: Routes = [
   { 
     path: 'BuySell', 
     loadChildren: './buy-sell/buy-sell.module#BuySellPageModule' 
-  }
+  },
+
 
 ];
 
