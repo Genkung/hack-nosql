@@ -16,7 +16,7 @@ const routes: Routes = [
     loadChildren: './list/list.module#ListPageModule'
   },
   {
-    path: 'Ratehistory',
+    path: 'Ratehistory/:id',
     loadChildren: './ratehistory/ratehistory.module#RatehistoryPageModule'
   },
   {

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { ModalController } from '@ionic/angular';
+import { ModalController,NavController } from '@ionic/angular';
+import { NavigationExtras, Router, UrlTree } from '@angular/router';
 import { ListPage} from '../list/list.page';
+import { url } from 'inspector';
 
 @Component({
   selector: 'app-buy-sell',
@@ -12,15 +14,15 @@ export class BuySellPage implements OnInit {
 
   coint:CoinPrice[] = [];
 
-  constructor(public alertController: AlertController, public modalController: ModalController)
+  constructor(public alertController: AlertController, public modalController: ModalController, private router: Router)
    {
     this.coint = 
     [
       {
-        _id:"1",name:"BTC",buy:20.5,sell:60.3
+        _id:"1",symbol:"BTC",buy:20.5,sell:60.3
       },
       {
-        _id:"2",name:"THB",buy:80.36,sell:98.30
+        _id:"2",symbol:"THB",buy:80.36,sell:98.30
       },
     ];
 
@@ -47,7 +49,7 @@ export class BuySellPage implements OnInit {
         }, {
           text: 'Ok',
           handler: () => {
-            console.log('Confirm Ok'+item.name);
+            console.log('Confirm Ok'+item.symbol);
           }
         }
       ]
@@ -79,17 +81,14 @@ export class BuySellPage implements OnInit {
     });
     await alert.present();
   }
-  async presentModal() {
-    const modal = await this.modalController.create({
-      component: ListPage,
-    });
-    return await modal.present();
+  async openRateHistory(item:CoinPrice) {
+    this.router.navigate(['/Ratehistory/'+item.symbol]);
   }
 }
 
 export class CoinPrice{
   _id:string
-  name:string
+  symbol:string
   buy:number
   sell:number  
 }
